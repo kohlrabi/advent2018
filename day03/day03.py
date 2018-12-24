@@ -9,7 +9,7 @@ def parse(line):
     return [int(x) for x in m.groups()]
 
 def part1(lines):
-    fabric = [[0 for i in range(2000)] for j in range(2000)]
+    fabric = [[0 for i in range(1000)] for j in range(1000)]
 
     for line in lines:
         n, l, t, w, h = parse(line)
@@ -26,7 +26,7 @@ def part1(lines):
 
 
 def part2(lines):
-    fabric = [[[] for i in range(2000)] for j in range(2000)]
+    fabric = [[[] for i in range(1000)] for j in range(1000)]
 
     max_n = 0
     for line in lines:
