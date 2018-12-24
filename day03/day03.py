@@ -2,7 +2,7 @@
 import fileinput
 import re
 
-r = re.compile(r"#\d+ @ (\d+),(\d+): (\d+)x(\d+)")
+r = re.compile(r"#(\d+) @ (\d+),(\d+): (\d+)x(\d+)")
 
 def parse(line):
     m = r.match(line)
@@ -12,7 +12,7 @@ def part1(lines):
     fabric = [[0 for i in range(2000)] for j in range(2000)]
 
     for line in lines:
-        l, t, w, h = parse(line)
+        n, l, t, w, h = parse(line)
         for i in range(l, l+w):
             for j in range(t, t+h):
                 fabric[i][j] += 1
@@ -26,7 +26,27 @@ def part1(lines):
 
 
 def part2(lines):
-    pass
+    fabric = [[[] for i in range(2000)] for j in range(2000)]
+
+    max_n = 0
+    for line in lines:
+        n, l, t, w, h = parse(line)
+        for i in range(l, l+w):
+            for j in range(t, t+h):
+                fabric[i][j].append(n)
+        max_n = n
+
+    for i in range(1, max_n+1):
+        found = False
+        for row in fabric:
+            for item in row:
+                if i in item and len(item) > 1:
+                    found = True
+                    break
+            if found:
+                break
+        else:
+            return i
 
 if __name__ == '__main__':
     lines = [x.strip() for x in fileinput.input()]
