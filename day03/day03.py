@@ -37,14 +37,13 @@ def part2(lines):
         max_n = n
 
     for i in range(1, max_n+1):
-        found = False
         for row in fabric:
             for item in row:
                 if i in item and len(item) > 1:
-                    found = True
                     break
-            if found:
-                break
+            else:
+                continue
+            break
         else:
             return i
 
