@@ -30,6 +30,6 @@ def part2(lines):
             return fr
 
 if __name__ == '__main__':
-    lines = [x for x in fileinput.input()]
+    lines = [x.strip() for x in fileinput.input()]
     print("Part 1:", part1(lines))
     print("Part 2:", part2(lines))
