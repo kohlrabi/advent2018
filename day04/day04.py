@@ -8,7 +8,7 @@ def parse(line):
     m = r.match(line)
     return m.groups()
 
-def part1(lines):
+def prep(lines):
     import datetime
 
     cron = []
@@ -46,7 +46,12 @@ def part1(lines):
             for i in range(s, e):
                 guards[active][i] += 1
             s = None
+
+    return guards
     
+def part1(lines):
+    guards = prep(lines)
+
     m = 0
     mi = -1
     mm = -1
@@ -61,7 +66,19 @@ def part1(lines):
     return checksum
 
 def part2(lines):
-    pass
+    guards = prep(lines)
+
+    m = (-1, -1)
+    mi = -1
+    for k, v in guards.items():
+        for i, vv in enumerate(v):
+            if vv > m[1]:
+                mi = k
+                m = (i, vv)
+
+    checksum = mi * m[0]
+    return checksum
+
 
 if __name__ == '__main__':
     lines = [x.strip() for x in fileinput.input()]
