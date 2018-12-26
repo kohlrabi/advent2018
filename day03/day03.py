@@ -28,24 +28,21 @@ def part1(lines):
 def part2(lines):
     fabric = [[[] for i in range(1000)] for j in range(1000)]
 
-    max_n = 0
+    single = set()
     for line in lines:
         n, l, t, w, h = parse(line)
+        single.add(n)
         for i in range(l, l+w):
             for j in range(t, t+h):
                 fabric[i][j].append(n)
-        max_n = n
+                if len(fabric[i][j]) > 1:
+                    for k in fabric[i][j]:
+                        try:
+                            single.remove(k)
+                        except KeyError:
+                            pass
 
-    for i in range(1, max_n+1):
-        for row in fabric:
-            for item in row:
-                if i in item and len(item) > 1:
-                    break
-            else:
-                continue
-            break
-        else:
-            return i
+    return list(single)[0]
 
 if __name__ == '__main__':
     lines = [x.strip() for x in fileinput.input()]
