@@ -2,10 +2,9 @@
 import fileinput
 
 
-
 def part1(line):
 
-    l = list(line)
+    l = [ord(x) for x in line]
     destroy = [True]
     while any(destroy):
         destroy = [False] * len(l)
@@ -14,7 +13,7 @@ def part1(line):
             if skip:
                 skip = False
                 continue
-            if t != n and t.lower() == n.lower():
+            if abs(t - n) == 32:
                 destroy[i] = True
                 destroy[i+1] = True
                 skip = True
@@ -24,9 +23,16 @@ def part1(line):
     return len(l)
 
 
-def part2(lines):
-   return
+def part2(line):
+    
+    ls = []
+    
+    for c in range(65, 65+26):
+        l = line.replace(chr(c), "")
+        l = l.replace(chr(c+32), "")
+        ls.append(part1(l))
 
+    return min(ls)
 
 if __name__ == '__main__':
     line = [x.strip() for x in fileinput.input()][0]
