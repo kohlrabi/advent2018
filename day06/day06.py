@@ -6,18 +6,27 @@ import re
 def manhattan(x, y, tx, ty):
     return np.abs(tx-x, dtype=int) + np.abs(ty-y, dtype=int)
 
-def part1(lines):
-
+def coords_grid(lines):
     r = re.compile(r"(\d+),\s*(\d+)")
 
     coords = np.array([tuple(map(int, r.match(l).groups())) for l in lines])
-    lc = coords.shape[0]
 
     xc = coords[:,0]
     yc = coords[:,1]
     max_x = xc.max() + 1
     max_y = yc.max() + 1
+    
     grid = np.zeros((max_x, max_y), dtype=int)
+
+    return coords, grid
+
+
+def part1(lines):
+
+    coords, grid = coords_grid(lines)
+
+    lc = coords.shape[0]
+    max_x, max_y = grid.shape
 
     for i in range(max_x):
         for j in range(max_y):
@@ -38,8 +47,18 @@ def part1(lines):
 
 
 def part2(lines):
+    
+    coords, grid = coords_grid(lines)
+    
+    max_x, max_y = grid.shape
+    
+    for i in range(max_x):
+        for j in range(max_y):
+            m = [manhattan(i, j, *c) for c in coords]
+            if np.sum(m) < 10000:
+                grid[i,j] = 1
 
-    return
+    return np.sum(grid)
 
 if __name__ == '__main__':
     lines = [x.strip() for x in fileinput.input()]
